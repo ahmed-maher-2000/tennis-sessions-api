@@ -6,13 +6,14 @@ const restrictTo = require('../utils/restrictTo')
 
 router.use(protect)
 router.get('/', sessions.getAllSessions)
+router.get('/search', sessions.searchSession)
 router.get('/:id', sessions.getSession)
 
 router.use(restrictTo('admin', 'manager'))
 router
     .route('/:id')
-    .post(sessions.createSession)
-    .patch(sessions.updateSession)
-    .delete(sessions.deleteSession)
+    .post(sessions.createSessionMiddleware, sessions.createSession)
+    .patch(sessions.updateAndDeleteSessionMiddleware, sessions.updateSession)
+    .delete(sessions.updateAndDeleteSessionMiddleware, sessions.deleteSession)
 
 module.exports = router
