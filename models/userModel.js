@@ -23,7 +23,64 @@ const userSchema = new Schema(
             unique: true,
             select: false,
         },
+        nickname: {
+            type: String,
+            require: [true, 'Please, provide your nickname.'],
+            minLength: [5, 'Nickname must be more than 5 characters'],
+            maxLength: [20, 'Nickname must be less than 20 characters'],
+            trim: true,
+        },
 
+        address: {
+            type: String,
+            require: [true, 'Please, provide your address.'],
+            minLength: [5, 'Address must be more than 5 characters'],
+            maxLength: [100, 'Address must be less than 100 characters'],
+            trim: true,
+        },
+
+        phoneNumber: {
+            type: String,
+            require: [true, 'Please, provide your phone number.'],
+            validate: [
+                function (phone) {
+                    return validator.isMobilePhone(phone, ['ar-EG'])
+                },
+                'Phone number is invalid.',
+            ],
+            unique: true,
+        },
+        role: {
+            type: String,
+            trim: true,
+            lower: true,
+            enum: ['player', 'trainer', 'manager', 'admin'],
+            default: 'player',
+        },
+        isActive: {
+            type: Boolean,
+            default: true,
+            select: false,
+        },
+
+        photo: {
+            type: String,
+            default: '/img/users/default.jpg',
+        },
+
+        birthday: {
+            type: Date,
+        },
+
+        appliedFor: {
+            type: Types.ObjectId,
+            ref: 'Academy',
+        },
+
+        sessions: {
+            type: Number,
+            default: 0,
+        },
         password: {
             type: String,
             minLength: [8, 'Password must be more than 8 characters'],
@@ -40,34 +97,6 @@ const userSchema = new Schema(
                 message: 'Passwords are not the same.',
             },
             select: false,
-        },
-
-        role: {
-            type: String,
-            trim: true,
-            lower: true,
-            enum: ['player', 'trainer', 'manager', 'admin'],
-            default: 'player',
-        },
-
-        isActive: {
-            type: Boolean,
-            default: true,
-            select: false,
-        },
-
-        photo: {
-            type: String,
-            default: '/img/users/default.jpg',
-        },
-
-        birthday: {
-            type: Date,
-        },
-
-        sessions: {
-            type: Number,
-            default: 0,
         },
 
         passwordChangedAt: {

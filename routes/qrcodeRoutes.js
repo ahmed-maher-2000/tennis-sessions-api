@@ -7,8 +7,8 @@ const qrcodes = require('../controllers/qrcodeController')
 router.use(protect)
 router.get(
     '/sessions/:id',
-    restrictTo('player', 'trainer'),
-    qrcodes.generateSessionJoin
+    restrictTo('admin', 'manager'),
+    qrcodes.generateSession
 )
 
 router.use(restrictTo('admin', 'manager'))

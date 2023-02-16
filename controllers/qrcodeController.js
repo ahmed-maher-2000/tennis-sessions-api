@@ -1,12 +1,11 @@
 const Models = require('../models')
 const AppError = require('../utils/appError')
-const { StatusCodes, SEE_OTHER } = require('http-status-codes')
+const { StatusCodes } = require('http-status-codes')
 const catchAsync = require('../utils/catchAsync')
 const Token = require('./authController/Token')
-const qrcode = require('qrcode')
+const qrcodeGenerator = require('../utils/qrCodeGenerator')
 
-exports.generateSessionJoin = catchAsync(async (req, res, next) => {
-    const { _id: userId } = req.user
+exports.generateSession = catchAsync(async (req, res, next) => {
     const { id: sessionId } = req.params
 
     const session = await Models.Session.findById(sessionId)
@@ -16,10 +15,10 @@ exports.generateSessionJoin = catchAsync(async (req, res, next) => {
             new AppError('Session is not found.', StatusCodes.NOT_FOUND)
         )
 
-    const expiredTime = 10 * 60 * 1000 // 10 mins
-    const token = Token.sign({ userId, sessionId }, expiredTime)
+    const expiredTime = 60 * 60 * 1000 // 1 hour
+    const token = Token.sign({ id: sessionId }, expiredTime)
 
-    const qr = qrcode.toDataURL(token)
+    const qr = await qrcodeGenerator(token)
 
     res.status(StatusCodes.OK).send(qr)
 })
