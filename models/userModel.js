@@ -72,9 +72,15 @@ const userSchema = new Schema(
             type: Date,
         },
 
-        appliedFor: {
+        appliedFor: [
+            {
+                type: Types.ObjectId,
+                ref: 'Academy',
+            },
+        ],
+        application: {
             type: Types.ObjectId,
-            ref: 'Academy',
+            ref: 'Application',
         },
 
         sessions: {
@@ -147,15 +153,16 @@ userSchema.methods.isPasswordChangedAfter = function (iat) {
         : false
 }
 
-userSchema.methods.createPasswordResetToken = async function () {
+userSchema.methods.createPasswordResetToken = function (
+    expiredTime = 10 * 60 * 1000 // 10 mins
+) {
     const resetToken = crypto.randomBytes(32).toString('hex')
     this.passwordResetToken = crypto
         .createHash('sha256')
         .update(resetToken)
         .digest('hex')
 
-    const tenMINS = 10 * 60 * 1000
-    this.passwordResetExpires = new Date(Date.now() + tenMINS) // 10 mins
+    this.passwordResetExpires = new Date(Date.now() + expiredTime)
     return resetToken
 }
 

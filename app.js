@@ -67,7 +67,7 @@ app.use('/api/v1/auth', routes.Auth)
 app.use('/api/v1/upload', routes.Upload)
 app.use('/api/v1/qrcode', routes.Qrcode)
 app.use('/api/v1/sessions', routes.Session)
-app.use('/api/v1/requests', routes.Request)
+app.use('/api/v1/applications', routes.Application)
 app.use('/api/v1/academies', routes.Academy)
 
 app.get('/', (req, res) => {

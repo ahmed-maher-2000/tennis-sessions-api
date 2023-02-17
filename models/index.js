@@ -1,13 +1,13 @@
 const User = require('./userModel')
 const Session = require('./sessionModel')
-const Request = require('./requestModel')
+const Application = require('./applicationModel')
 const Academy = require('./academyModel')
 const Package = require('./packageModel')
 
 module.exports = {
     User,
     Session,
-    Request,
+    Application,
     Academy,
     Package,
 }

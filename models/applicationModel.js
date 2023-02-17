@@ -1,7 +1,7 @@
 const { Schema, model, Types } = require('mongoose')
 const validator = require('validator')
 
-const requestSchema = new Schema(
+const applicationSchema = new Schema(
     {
         name: {
             type: String,
@@ -46,7 +46,6 @@ const requestSchema = new Schema(
             maxLength: [60, 'Email must be less than 60 characters'],
             trim: true,
             unique: true,
-            select: false,
         },
 
         school: {
@@ -57,10 +56,12 @@ const requestSchema = new Schema(
             trim: true,
         },
 
-        appliedFor: {
-            type: Types.ObjectId,
-            ref: 'Academy',
-        },
+        appliedFor: [
+            {
+                type: Types.ObjectId,
+                ref: 'Academy',
+            },
+        ],
 
         birthday: {
             type: Date,
@@ -191,8 +192,8 @@ const requestSchema = new Schema(
     { timestamps: true }
 )
 
-requestSchema.index({
+applicationSchema.index({
     name: 'text',
 })
 
-module.exports = model('Request', requestSchema)
+module.exports = model('Application', applicationSchema)
