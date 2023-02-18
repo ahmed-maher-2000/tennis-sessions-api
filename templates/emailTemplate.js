@@ -1,9 +1,9 @@
-const renderEmail = (firstName, url) => {
+const renderEmail = (firstName, url, label) => {
     const markup = `
     <div>
         <p>Hi, ${firstName}</p>
         <p>
-            Forget your password? Submit a PATCH request with your new password and
+            ${label}? Submit a PATCH request with your new password and
             your password confirmation to: ${url}.
         </p>
         <a
