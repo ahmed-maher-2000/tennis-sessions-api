@@ -2,6 +2,11 @@ const app = require('./app')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const { cloudinaryConfig } = require('./utils/cloudinary')
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+const socketController = require('./controllers/socketController')
+
+socketController(io)
 
 dotenv.config()
 
@@ -26,9 +31,7 @@ mongoose
 cloudinaryConfig()
 
 const PORT = process.env.PORT ?? 3000
-const server = app.listen(PORT, () =>
-    console.log(`Server is listening on port: ${PORT}`)
-)
+server.listen(PORT, () => console.log(`Server is listening on port: ${PORT}`))
 
 process.on('unhandledRejection', (err) => {
     console.log('UNHANDLED REJECTION !!!!!!!!')
