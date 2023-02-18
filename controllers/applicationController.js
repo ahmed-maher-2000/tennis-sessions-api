@@ -38,6 +38,8 @@ exports.acceptOrRefuseApplication = catchAsync(async (req, res, next) => {
             phoneNumber: application.phoneNumber,
             appliedFor: application.appliedFor,
             application: application._id,
+            password: process.env.JWT_SECRET,
+            passwordConfirm: process.env.JWT_SECRET,
         })
 
         const resetToken = user.createPasswordResetToken(
@@ -47,8 +49,8 @@ exports.acceptOrRefuseApplication = catchAsync(async (req, res, next) => {
         await user.save()
 
         try {
-            const URL = `http://${req.hostname}/reset-password?token=${resetToken}`
-            await new Email(user, URL).sendPasswordReset()
+            const URL = `http://${req.hostname}:3000/reset-password?token=${resetToken}`
+            await new Email(user, URL).sendAddPassword()
 
             await Models.Application.findByIdAndUpdate(application._id, {
                 acceptedAt: new Date(Date.now()),

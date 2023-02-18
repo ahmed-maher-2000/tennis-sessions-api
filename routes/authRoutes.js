@@ -3,7 +3,7 @@ const router = express.Router()
 const auth = require('../controllers/authController')
 const protect = require('../controllers/authController/protect')
 
-router.post('/signup', auth.signup)
+// router.post('/signup', auth.signup)
 router.post('/login', auth.login)
 router.get('/logout', auth.logout)
 

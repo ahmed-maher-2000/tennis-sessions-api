@@ -2,23 +2,23 @@ const catchAsync = require('../../utils/catchAsync')
 const Models = require('../../models')
 const AppError = require('../../utils/appError')
 const Token = require('./Token')
-const statusCodes = require('http-status-codes')
+const { StatusCodes } = require('http-status-codes')
 const Sender = require('../../utils/Sender')
 const Email = require('../../utils/email')
 const crypto = require('crypto')
 
-exports.signup = catchAsync(async (req, res, next) => {
-    const { name, email, password, passwordConfirm } = req.body
+// exports.signup = catchAsync(async (req, res, next) => {
+//     const { name, email, password, passwordConfirm } = req.body
 
-    let user = await Models.User.create({
-        name,
-        email,
-        password,
-        passwordConfirm,
-    })
+//     let user = await Models.User.create({
+//         name,
+//         email,
+//         password,
+//         passwordConfirm,
+//     })
 
-    Token.sendUser(res, statusCodes.CREATED, user)
-})
+//     Token.sendUser(res, StatusCodes.CREATED, user)
+// })
 
 exports.login = catchAsync(async (req, res, next) => {
     const { password, email } = req.body
@@ -27,7 +27,7 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'Please, provide email or password',
-                statusCodes.BAD_REQUEST
+                StatusCodes.BAD_REQUEST
             )
         )
 
@@ -39,15 +39,15 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'Incorrect email or password.',
-                statusCodes.BAD_REQUEST
+                StatusCodes.BAD_REQUEST
             )
         )
 
-    Token.sendUser(res, statusCodes.OK, user)
+    Token.sendUser(res, StatusCodes.OK, user)
 })
 
 exports.logout = catchAsync((req, res, next) => {
-    Sender.send(res.clearCookie('jwt'), statusCodes.OK, undefined, {
+    Sender.send(res.clearCookie('jwt'), StatusCodes.OK, undefined, {
         message: 'You logged out successfully.',
     })
 })
@@ -59,7 +59,7 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'There is no user with this email.',
-                statusCodes.BAD_REQUEST
+                StatusCodes.BAD_REQUEST
             )
         )
     const resetToken = user.createPasswordResetToken()
@@ -69,7 +69,7 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
         const URL = `http://${req.hostname}/reset-password?token=${resetToken}`
         await new Email(user, URL).sendPasswordReset()
 
-        Sender.send(res, statusCodes.OK, undefined, {
+        Sender.send(res, StatusCodes.OK, undefined, {
             message: 'Token is sent to your email.',
         })
     } catch (error) {
@@ -81,7 +81,7 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'There was an error sending the email. Try again later',
-                statusCodes.INTERNAL_SERVER_ERROR
+                StatusCodes.INTERNAL_SERVER_ERROR
             )
         )
     }
@@ -101,7 +101,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'Token is invalid or has expired',
-                statusCodes.BAD_REQUEST
+                StatusCodes.BAD_REQUEST
             )
         )
 
@@ -111,7 +111,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     user.passwordResetExpires = undefined
 
     await user.save()
-    Token.sendUser(res, statusCodes.OK, user)
+    Token.sendUser(res, StatusCodes.OK, user)
 })
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -126,7 +126,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'The old password is incorrect.',
-                statusCodes.BAD_REQUEST
+                StatusCodes.BAD_REQUEST
             )
         )
 
@@ -135,5 +135,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
     await user.save()
 
-    Token.sendUser(res, statusCodes.OK, user)
+    Token.sendUser(res, StatusCodes.OK, user)
 })

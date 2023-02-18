@@ -69,6 +69,7 @@ app.use('/api/v1/qrcode', routes.Qrcode)
 app.use('/api/v1/sessions', routes.Session)
 app.use('/api/v1/applications', routes.Application)
 app.use('/api/v1/academies', routes.Academy)
+app.use('/api/v1/packages', routes.Package)
 
 app.get('/', (req, res) => {
     res.status(404).json({
