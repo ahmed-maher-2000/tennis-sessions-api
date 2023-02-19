@@ -1,17 +1,29 @@
+const protectHandler = require('./protectMiddlewareHandler')
+const joinSessionHandler = require('./joinSessionHandler')
+const birthdayHandler = require('./birthdayHandler')
+
 let isExecuted = false
-const birthdayEvent = require('./birthdayEvent')
 
-module.exports = (io) => {
-    io.on('connection', (socket) => {
-        console.log(`${socket.id} is connected.`)
+exports.protect = protectHandler
 
-        // Tasks to run
-        // - execute birthdays events
-        // - create event join session
+exports.connectionHandler = (io) => {
+    return (socket) => {
+        console.log(
+            `user ${socket.user.name} is connected with id: ${socket.id}.`
+        )
 
-        if (!isExecuted) birthdayEvent(io)
-        socket.on('disconnect', () => {
-            console.log(`${socket.id} is disconnected.`)
+        // join session by qrcode token
+        socket.on('joinSession', joinSessionHandler(socket))
+
+        // birthday events handler
+        if (!isExecuted) birthdayHandler(io)
+
+        socket.on('error', (err) => {
+            if (err) socket.disconnect()
         })
-    })
+        // socket.on('joinSession', (token) => {})
+        socket.on('disconnect', () => {
+            console.log(`user ${socket.user.name} is disconnected.`)
+        })
+    }
 }

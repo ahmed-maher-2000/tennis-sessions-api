@@ -43,4 +43,4 @@ eventSchema.pre(/^find/, function (next) {
     next()
 })
 
-module.exports = model('Event')
+module.exports = model('Event', eventSchema)

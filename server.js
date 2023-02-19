@@ -3,10 +3,18 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const { cloudinaryConfig } = require('./utils/cloudinary')
 const server = require('http').createServer(app)
-const io = require('socket.io')(server)
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*',
+    },
+})
 const socketController = require('./controllers/socketController')
 
-socketController(io)
+// auth middleware for socket io
+io.use(socketController.protect)
+
+// connection event in socket io
+io.on('connection', socketController.connectionHandler(io))
 
 dotenv.config()
 
