@@ -1,17 +1,23 @@
 const Models = require('../../models')
 
 module.exports = (io) => {
-    const dayInMS = 1000 //24 * 60 * 60 * 1000
-
+    const dayInMS = 24 * 60 * 60 * 1000
     setInterval(async () => {
-        const nowInMS = Date.now()
+        const today = new Date(Date.now())
 
-        let users = await Models.User.find({
-            birthday: {
-                $gte: new Date(nowInMS).toDateString(),
-                $lt: new Date(nowInMS + dayInMS).toDateString(),
-            },
-        }).select('+birthday +name +role')
+        let users = await Models.User.find()
+            .select('+birthday +name +role')
+            .lean()
+
+        users = users.filter((user) => {
+            let birthday = new Date(user.birthday)
+
+            return (
+                birthday &&
+                birthday.getDate() === today.getDate() &&
+                birthday.getMonth() === today.getMonth()
+            )
+        })
 
         if (users.length > 0) {
             users = users.map((user) => {
@@ -22,18 +28,15 @@ module.exports = (io) => {
                 }
             })
 
-            console.log(users)
-
             const events = await Models.Event.create(users)
 
             // Get All Sockets Of Admin and Manager Users
-            const sockets = io.sockets
-                .clients()
-                .filter(
-                    (sock) =>
-                        sock.user?.role === 'admin' ||
-                        sock.user?.role === 'manager'
-                )
+            let sockets = await io.fetchSockets()
+
+            sockets = sockets.filter(
+                (sock) =>
+                    sock.user?.role === 'admin' || sock.user?.role === 'manager'
+            )
 
             sockets.forEach((adminSocket) => {
                 io.to(adminSocket.id).emit('birthday', events)

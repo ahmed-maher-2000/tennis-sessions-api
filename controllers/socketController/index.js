@@ -16,7 +16,10 @@ exports.connectionHandler = (io) => {
         socket.on('joinSession', joinSessionHandler(socket))
 
         // birthday events handler
-        if (!isExecuted) birthdayHandler(io)
+        if (!isExecuted) {
+            birthdayHandler(io)
+            isExecuted = true
+        }
 
         socket.on('error', (err) => {
             if (err) socket.disconnect()

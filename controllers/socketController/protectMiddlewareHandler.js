@@ -23,7 +23,7 @@ module.exports = async (socket, next) => {
             )
         }
 
-        if (currentUser.changedPasswordAfter(decoded.iat)) {
+        if (currentUser.isPasswordChangedAfter(decoded.iat)) {
             return next(
                 new Error(
                     'User recently changed the password! Please log in again'

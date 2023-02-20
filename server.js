@@ -3,20 +3,11 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const { cloudinaryConfig } = require('./utils/cloudinary')
 const server = require('http').createServer(app)
-const io = require('socket.io')(server, {
-    cors: {
-        origin: '*',
-    },
-})
+const { Server } = require('socket.io')
 const socketController = require('./controllers/socketController')
 
-// auth middleware for socket io
-io.use(socketController.protect)
-
-// connection event in socket io
-io.on('connection', socketController.connectionHandler(io))
-
 dotenv.config()
+cloudinaryConfig()
 
 process.on('uncaughtException', (err) => {
     console.log('UNCAUGHT EXCEPTION!!')
@@ -28,6 +19,8 @@ const DB =
     process.env.NODE_ENV === 'production'
         ? process.env.DATABASE
         : process.env.DATABASE_LOCAL
+
+// connect to Database
 mongoose.set('strictQuery', false)
 mongoose
     .connect(DB, {
@@ -36,7 +29,14 @@ mongoose
     })
     .then(() => console.log('Database connected Successfully...'))
 
-cloudinaryConfig()
+const io = new Server(server, {
+    cors: '*',
+})
+// auth middleware for socket io
+io.use(socketController.protect)
+
+// connection event in socket io
+io.on('connection', socketController.connectionHandler(io))
 
 const PORT = process.env.PORT ?? 3000
 server.listen(PORT, () => console.log(`Server is listening on port: ${PORT}`))
