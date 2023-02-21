@@ -34,6 +34,7 @@ exports.acceptOrRefuseApplication = catchAsync(async (req, res, next) => {
             email: application.email,
             name: application.name,
             nickname: application.nickname,
+            birthday: application.birthday,
             address: application.address,
             phoneNumber: application.phoneNumber,
             appliedFor: application.appliedFor,

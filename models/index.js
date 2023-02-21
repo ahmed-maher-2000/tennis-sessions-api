@@ -3,6 +3,7 @@ const Session = require('./sessionModel')
 const Application = require('./applicationModel')
 const Academy = require('./academyModel')
 const Package = require('./packageModel')
+const Event = require('./eventModel')
 
 module.exports = {
     User,
@@ -10,4 +11,5 @@ module.exports = {
     Application,
     Academy,
     Package,
+    Event,
 }

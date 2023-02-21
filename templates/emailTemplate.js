@@ -19,7 +19,7 @@ const renderEmail = (firstName, url, label) => {
         >
             Click Here
         </a>
-        <p>If you didn't forget your password, please ignore this email!</p>
+        <p>If you didn't ${label}, please ignore this email!</p>
     </div>
     `
 

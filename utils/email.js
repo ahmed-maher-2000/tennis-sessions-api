@@ -35,7 +35,7 @@ module.exports = class Email {
         const html = emailTemplate(
             this.firstName,
             this.url,
-            'Add your password'
+            'Submit your password'
         )
         sgMail.setApiKey(process.env.SENDGRID_API_KEY)
         const msg = {

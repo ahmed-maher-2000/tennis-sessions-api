@@ -18,6 +18,8 @@ exports.generateSession = catchAsync(async (req, res, next) => {
     const expiredTime = 60 * 60 * 1000 // 1 hour
     const token = Token.sign({ id: sessionId }, expiredTime)
 
+    console.log(token)
+
     const qr = await qrcodeGenerator(token)
 
     res.status(StatusCodes.OK).send(qr)
