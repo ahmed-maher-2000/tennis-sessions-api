@@ -12,7 +12,11 @@ module.exports = class Email {
 
     // Send the actual email
     async sendPasswordReset() {
-        const html = emailTemplate(this.firstName, this.url)
+        const html = emailTemplate(
+            this.firstName,
+            this.url,
+            'Forget your password'
+        )
         sgMail.setApiKey(process.env.SENDGRID_API_KEY)
         // 2) Define email options
         const msg = {
@@ -24,6 +28,24 @@ module.exports = class Email {
         }
 
         // 3) Create a transport and send email
+        await sgMail.send(msg)
+    }
+
+    async sendAddPassword() {
+        const html = emailTemplate(
+            this.firstName,
+            this.url,
+            'Submit your password'
+        )
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+        const msg = {
+            from: this.from,
+            to: this.to,
+            subject: 'Submit Password',
+            html,
+            text: htmlToText(html),
+        }
+
         await sgMail.send(msg)
     }
 }

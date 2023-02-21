@@ -1,7 +1,7 @@
 {
-    "name": "exams-api",
+    "name": "tennis-api",
     "version": "1.0.0",
-    "description": "Exams API",
+    "description": "Tennis API",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
@@ -10,14 +10,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/AhmedMaher015/exams-API.git"
+        "url": "git+https://github.com/AhmedMaher015/tennis-API.git"
     },
     "author": "Ahmed Maher",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/AhmedMaher015/exams-API/issues"
+        "url": "https://github.com/AhmedMaher015/tennis-API/issues"
     },
-    "homepage": "https://github.com/AhmedMaher015/exams-API#readme",
+    "homepage": "https://github.com/AhmedMaher015/tennis-API#readme",
     "dependencies": {
         "@sendgrid/mail": "^7.7.0",
         "bcryptjs": "^2.4.3",
@@ -37,6 +37,7 @@
         "mongoose": "^6.9.0",
         "qrcode": "^1.5.1",
         "sendgrid": "^5.2.3",
+        "socket.io": "^4.6.0",
         "validator": "^13.7.0",
         "xss-clean": "^0.1.1"
     },
