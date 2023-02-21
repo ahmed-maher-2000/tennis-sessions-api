@@ -2,9 +2,8 @@ const protectHandler = require('./protectMiddlewareHandler')
 const joinSessionHandler = require('./joinSessionHandler')
 const birthdayHandler = require('./birthdayHandler')
 
-let isExecuted = false
-
 exports.protect = protectHandler
+exports.birthdayHandler = birthdayHandler
 
 exports.connectionHandler = (io) => {
     return (socket) => {
@@ -14,12 +13,6 @@ exports.connectionHandler = (io) => {
 
         // join session by qrcode token
         socket.on('joinSession', joinSessionHandler(socket))
-
-        // birthday events handler
-        if (!isExecuted) {
-            birthdayHandler(io)
-            isExecuted = true
-        }
 
         socket.on('error', (err) => {
             if (err) socket.disconnect()

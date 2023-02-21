@@ -95,7 +95,6 @@ const applicationSchema = new Schema(
                         },
                         'Phone number is invalid.',
                     ],
-                    unique: true,
                 },
 
                 email: {
@@ -108,7 +107,6 @@ const applicationSchema = new Schema(
                     minLength: [10, 'Email must be more than 5 characters'],
                     maxLength: [60, 'Email must be less than 60 characters'],
                     trim: true,
-                    unique: true,
                     select: false,
                 },
 
@@ -145,7 +143,6 @@ const applicationSchema = new Schema(
                         },
                         'Phone number is invalid.',
                     ],
-                    unique: true,
                 },
 
                 email: {
@@ -158,7 +155,6 @@ const applicationSchema = new Schema(
                     minLength: [10, 'Email must be more than 5 characters'],
                     maxLength: [60, 'Email must be less than 60 characters'],
                     trim: true,
-                    unique: true,
                     select: false,
                 },
 
