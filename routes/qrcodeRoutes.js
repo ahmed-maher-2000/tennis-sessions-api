@@ -5,12 +5,13 @@ const restrictTo = require('../utils/restrictTo')
 const qrcodes = require('../controllers/qrcodeController')
 
 router.use(protect)
+
 router.get(
     '/sessions/:id',
     restrictTo('admin', 'manager'),
     qrcodes.generateSession
 )
 
-router.use(restrictTo('admin', 'manager'))
+router.get('/presence', restrictTo('admin'), qrcodes.generatePresence)
 
 module.exports = router

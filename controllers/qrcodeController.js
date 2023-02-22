@@ -24,3 +24,24 @@ exports.generateSession = catchAsync(async (req, res, next) => {
 
     res.status(StatusCodes.OK).send(qr)
 })
+
+exports.generatePresence = catchAsync(async (req, res, next) => {
+    const { id: adminId } = req.user
+
+    const user = await Models.User.findById(adminId)
+
+    if (!user)
+        return next(new AppError('User is not found.', StatusCodes.NOT_FOUND))
+
+    const expiredTime = 8 * 60 * 60 * 1000 // 8 hour
+    const token = Token.sign(
+        { id: user._id, day: new Date(Date.now()).toISOString().split('T')[0] },
+        expiredTime
+    )
+
+    console.log(token)
+
+    const qr = await qrcodeGenerator(token)
+
+    res.status(StatusCodes.OK).send(qr)
+})
