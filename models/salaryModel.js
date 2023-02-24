@@ -1,9 +1,9 @@
 const { Types, Schema, model } = require('mongoose')
-const packageSchema = new Schema(
+const salarySchema = new Schema(
     {
-        sessions: {
-            type: Number,
-            default: 0,
+        trainer: {
+            type: Types.ObjectId,
+            ref: 'User',
         },
 
         price: {
@@ -19,9 +19,9 @@ const packageSchema = new Schema(
     { timestamps: true }
 )
 
-packageSchema.pre(/^find/, function (next) {
+salarySchema.pre(/^find/, function (next) {
     this.find().populate({
-        path: 'createdBy',
+        path: 'trainer',
         select: {
             name: 1,
             photo: 1,
@@ -31,4 +31,4 @@ packageSchema.pre(/^find/, function (next) {
     next()
 })
 
-module.exports = model('Package', packageSchema)
+module.exports = model('Salary', salarySchema)

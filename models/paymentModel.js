@@ -1,15 +1,28 @@
 const { Types, Schema, model } = require('mongoose')
 const User = require('./userModel')
-const Package = require('./packageModel')
+const Salary = require('./salaryModel')
 
 const paymentSchema = new Schema(
     {
-        package: {
+        salary: {
             type: Types.ObjectId,
-            ref: 'Package',
+            ref: 'Salary',
+
+            validate: [
+                async function (salary) {
+                    const document = await Salary.findById(salary)
+                    return document ? true : false
+                },
+                'Invalid salary.',
+            ],
         },
 
-        value: {
+        sessions: {
+            type: Number,
+            default: 0,
+        },
+
+        price: {
             type: Number,
             default: 0,
         },
@@ -28,18 +41,12 @@ const paymentSchema = new Schema(
 )
 
 paymentSchema.pre('save', async function (next) {
-    const package = await Package.findById(this.package)
-
-    await User.findByIdAndUpdate(this.player, {
-        sessions: {
-            $sum: package.sessions,
-        },
-    })
-
+    const salary = await Salary.findById(this.salary)
+    this.price = salary.price * this.sessions
     next()
 })
 
-packageSchema.pre(/^find/, function (next) {
+paymentSchema.pre(/^find/, function (next) {
     this.find()
         .populate({
             path: 'createdBy',
@@ -56,9 +63,9 @@ packageSchema.pre(/^find/, function (next) {
             },
         })
         .populate({
-            path: 'package',
+            path: 'salary',
             select: {
-                sessions: 1,
+                traier: 1,
                 price: 1,
             },
         })
