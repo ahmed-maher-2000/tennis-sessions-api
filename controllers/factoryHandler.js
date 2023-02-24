@@ -3,6 +3,7 @@ const appFeatures = require('../utils/appFeatures')
 const AppError = require('../utils/appError')
 const { StatusCodes } = require('http-status-codes')
 const Sender = require('../utils/Sender')
+const { singular } = require('pluralize')
 
 exports.getAll = (Model) =>
     catchAsync(async (req, res, next) => {
@@ -41,12 +42,12 @@ exports.getAll = (Model) =>
 exports.getOne = (Model, isMe = false) =>
     catchAsync(async (req, res, next) => {
         const id = req.params.id
-        const isAdmin = req.user.role === 'admin'
+        const isAdmin = req.user?.role === 'admin'
         const document =
             isAdmin || isMe
                 ? await Model.findById(id).select('+email +phoneNumber')
                 : await Model.findById(id).select('-role')
-        const collectionName = Model.collection.collectionName.slice(0, -1)
+        const collectionName = singular(Model.collection.collectionName)
         if (!document)
             return next(
                 new AppError(
@@ -70,7 +71,7 @@ exports.createOne = (Model, populateOptions) =>
             document = await document.populate(populateOptions)
         }
 
-        const collectionName = Model.collection.collectionName.slice(0, -1)
+        const collectionName = singular(Model.collection.collectionName)
         if (document.password) document.password = undefined
         Sender.send(res, StatusCodes.CREATED, {
             [collectionName]: document,
@@ -95,7 +96,9 @@ exports.updateOne = (Model, isMe, populateOptions) =>
 
         if (populateOptions) document = await document.populate(populateOptions)
 
-        const collectionName = Model.collection.collectionName.slice(0, -1)
+        const collectionName = singular(
+            Model.collection.collectionName.slice(0, -1)
+        )
         if (!document)
             return next(
                 new AppError(
@@ -111,11 +114,14 @@ exports.updateOne = (Model, isMe, populateOptions) =>
 
 exports.deleteOne = (Model) =>
     catchAsync(async (req, res, next) => {
-        req.filterOptions._id = req.params.id
+        req.filterOptions = {
+            _id: req.params.id,
+            ...req.filterOptions,
+        }
 
         const document = await Model.findOneAndDelete(req.filterOptions)
 
-        const collectionName = Model.collection.collectionName.slice(0, -1)
+        const collectionName = singular(Model.collection.collectionName)
         if (!document)
             return next(
                 new AppError(
