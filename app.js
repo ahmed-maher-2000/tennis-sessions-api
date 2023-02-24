@@ -71,6 +71,7 @@ app.use('/api/v1/applications', routes.Application)
 app.use('/api/v1/academies', routes.Academy)
 app.use('/api/v1/payments', routes.Payment)
 app.use('/api/v1/salaries', routes.Salary)
+app.use('/api/v1/presence', routes.Presence)
 
 app.get('/', (req, res) => {
     res.status(404).json({
