@@ -18,8 +18,8 @@ const sessionEspenseSchema = new Schema(
 
 paymentSchema.pre('save', async function (next) {
     await User.findByIdAndUpdate(this.player, {
-        sessions: {
-            $sum: -1,
+        $inc: {
+            sessions: -1,
         },
     })
 

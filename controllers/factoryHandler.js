@@ -63,8 +63,6 @@ exports.getOne = (Model, isMe = false) =>
 exports.createOne = (Model, populateOptions) =>
     catchAsync(async (req, res, next) => {
         let document = new Model(req.body)
-        // set examId to update the exam questions number
-        if (req.body.exam) document.examId = req.body.exam
 
         await document.save()
         if (populateOptions) {
@@ -81,7 +79,10 @@ exports.createOne = (Model, populateOptions) =>
 exports.updateOne = (Model, isMe, populateOptions) =>
     catchAsync(async (req, res, next) => {
         const isAdmin = req.user.role === 'admin'
-        req.filterOptions._id = req.params.id
+        req.filterOptions = {
+            _id: req.params.id,
+            ...req.filterOptions,
+        }
 
         const document =
             isAdmin || isMe

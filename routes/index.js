@@ -6,8 +6,8 @@ const Qrcode = require('./qrcodeRoutes')
 const Application = require('./applicationRoutes')
 const Academy = require('./academyRoutes')
 const Payment = require('./paymentRoutes')
-const Salary = require('./salaryRoutes')
 const Presence = require('./presenceRoutes')
+const Package = require('./packageRoutes')
 
 module.exports = {
     User,
@@ -18,6 +18,6 @@ module.exports = {
     Session,
     Qrcode,
     Payment,
-    Salary,
+    Package,
     Presence,
 }
