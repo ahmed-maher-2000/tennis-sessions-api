@@ -10,9 +10,9 @@ router.get('/search', sessions.searchSession)
 router.get('/:id', sessions.getSession)
 
 router.use(restrictTo('admin', 'manager'))
+router.post('/', sessions.createSessionMiddleware, sessions.createSession)
 router
     .route('/:id')
-    .post(sessions.createSessionMiddleware, sessions.createSession)
     .patch(sessions.updateAndDeleteSessionMiddleware, sessions.updateSession)
     .delete(sessions.updateAndDeleteSessionMiddleware, sessions.deleteSession)
 

@@ -8,6 +8,7 @@ const Academy = require('./academyRoutes')
 const Payment = require('./paymentRoutes')
 const Presence = require('./presenceRoutes')
 const Package = require('./packageRoutes')
+const Score = require('./scoreRoutes')
 
 module.exports = {
     User,
@@ -20,4 +21,5 @@ module.exports = {
     Payment,
     Package,
     Presence,
+    Score,
 }
