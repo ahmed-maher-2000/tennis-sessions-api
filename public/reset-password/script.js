@@ -18,7 +18,7 @@ submitBtn.addEventListener('click', async (e) => {
     e.preventDefault()
     try {
         const res = await fetch(
-            `http://${location.host}/api/v1/auth/resetPassword/${token}`,
+            `${location.protocol}///${location.host}/api/v1/auth/resetPassword/${token}`,
             {
                 method: 'PATCH',
                 headers: {
