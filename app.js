@@ -64,14 +64,14 @@ app.use(compression())
 // Mounting routers
 app.use('/api/v1/users', routes.User)
 app.use('/api/v1/auth', routes.Auth)
+app.use('/api/v1/applications', routes.Application)
+app.use('/api/v1/payments', routes.Payment)
+app.use('/api/v1/presence', routes.Presence)
+app.use('/api/v1/sessions', routes.Session)
+app.use('/api/v1/academies', routes.Academy)
+app.use('/api/v1/packages', routes.Package)
 app.use('/api/v1/upload', routes.Upload)
 app.use('/api/v1/qrcode', routes.Qrcode)
-app.use('/api/v1/sessions', routes.Session)
-app.use('/api/v1/applications', routes.Application)
-app.use('/api/v1/academies', routes.Academy)
-app.use('/api/v1/payments', routes.Payment)
-app.use('/api/v1/salaries', routes.Salary)
-app.use('/api/v1/presence', routes.Presence)
 
 app.get('/', (req, res) => {
     res.status(404).json({
