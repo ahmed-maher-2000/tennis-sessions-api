@@ -50,7 +50,7 @@ exports.acceptOrRefuseApplication = catchAsync(async (req, res, next) => {
         await user.save()
 
         try {
-            const URL = `http://${req.hostname}/reset-password?token=${resetToken}`
+            const URL = `${req.protocol}://${req.hostname}/reset-password?token=${resetToken}`
             await new Email(user, URL).sendAddPassword()
 
             await Models.Application.findByIdAndUpdate(application._id, {
