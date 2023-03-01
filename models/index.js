@@ -6,6 +6,7 @@ const Event = require('./eventModel')
 const Payment = require('./paymentModel')
 const Presence = require('./presenceModel')
 const Package = require('./packageModel')
+const Score = require('./scoreModel')
 
 module.exports = {
     User,
@@ -16,4 +17,5 @@ module.exports = {
     Payment,
     Package,
     Presence,
+    Score,
 }

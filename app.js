@@ -72,6 +72,7 @@ app.use('/api/v1/academies', routes.Academy)
 app.use('/api/v1/packages', routes.Package)
 app.use('/api/v1/upload', routes.Upload)
 app.use('/api/v1/qrcode', routes.Qrcode)
+app.use('/api/v1/scores', routes.Score)
 
 app.get('/', (req, res) => {
     res.status(404).json({

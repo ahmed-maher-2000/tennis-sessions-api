@@ -10,9 +10,10 @@ router.get('/:id', academys.getAcademy)
 
 router.use(protect)
 router.use(restrictTo('admin', 'manager'))
+router.post('/', academys.createAcademy)
 router
     .route('/:id')
-    .post(academys.createAcademy)
+
     .patch(academys.updateAcademy)
     .delete(academys.deleteAcademy)
 
