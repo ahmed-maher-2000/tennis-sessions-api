@@ -1,6 +1,6 @@
 const { Types, Schema, model } = require('mongoose')
-const User = require('./userModel')
 const Package = require('./packageModel')
+const User = require('./userModel')
 
 const paymentSchema = new Schema(
     {
@@ -9,7 +9,17 @@ const paymentSchema = new Schema(
             ref: 'Package',
         },
 
-        value: {
+        packageNumber: {
+            type: Number,
+            default: 1,
+        },
+
+        sessions: {
+            type: Number,
+            default: 0,
+        },
+
+        price: {
             type: Number,
             default: 0,
         },
@@ -29,17 +39,13 @@ const paymentSchema = new Schema(
 
 paymentSchema.pre('save', async function (next) {
     const package = await Package.findById(this.package)
-
-    await User.findByIdAndUpdate(this.player, {
-        sessions: {
-            $sum: package.sessions,
-        },
-    })
+    this.price = package.price * this.packageNumber
+    this.sessions = package.sessions * this.packageNumber
 
     next()
 })
 
-packageSchema.pre(/^find/, function (next) {
+paymentSchema.pre(/^find/, function (next) {
     this.find()
         .populate({
             path: 'createdBy',
@@ -55,14 +61,15 @@ packageSchema.pre(/^find/, function (next) {
                 photo: 1,
             },
         })
-        .populate({
-            path: 'package',
-            select: {
-                sessions: 1,
-                price: 1,
-            },
-        })
 
     next()
+})
+
+paymentSchema.post('save', async function () {
+    await User.findByIdAndUpdate(this.player, {
+        $inc: {
+            sessions: this.sessions,
+        },
+    })
 })
 module.exports = model('Payment', paymentSchema)

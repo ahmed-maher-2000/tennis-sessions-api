@@ -14,6 +14,9 @@ exports.connectionHandler = (io) => {
         // join session by qrcode token
         socket.on('joinSession', joinSessionHandler(socket))
 
+        // add payment
+        socket.on('addPayment', addPaymentHandler(socket))
+
         socket.on('error', (err) => {
             if (err) socket.disconnect()
         })

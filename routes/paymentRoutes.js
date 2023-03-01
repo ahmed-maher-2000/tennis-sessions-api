@@ -1,19 +1,21 @@
 const express = require('express')
 const router = express.Router()
-const packages = require('../controllers/packageController')
+const payments = require('../controllers/paymentController')
 const protect = require('../controllers/authController/protect')
 const restrictTo = require('../utils/restrictTo')
 
 router.use(protect)
 
-router.get('/', packages.getAllPackages)
-router.get('/:id', packages.getPackage)
-
 router.use(restrictTo('admin', 'manager'))
-router.post('/', packages.createPackageMiddleware, packages.createPackage)
+router
+    .route('/')
+    .get(payments.getAllPayments)
+    .post(payments.createPaymentMiddleware, payments.createPayment)
+
 router
     .route('/:id')
-    .patch(packages.updatePackage)
-    .delete(packages.deletePackage)
+    .get(payments.getPayment)
+    .patch(payments.updatePayment)
+    .delete(payments.deletePayment)
 
 module.exports = router
