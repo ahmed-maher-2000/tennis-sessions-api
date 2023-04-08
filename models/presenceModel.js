@@ -1,4 +1,5 @@
 const { Types, Schema, model } = require('mongoose')
+const moment = require('moment')
 
 const presenceSchema = new Schema(
     {
@@ -9,7 +10,7 @@ const presenceSchema = new Schema(
 
         day: {
             type: String,
-            default: new Date(Date.now()).toISOString().split('T')[0], // YYYY-MM-DD
+            default: moment(Date.now()).format('YYYY-MM-DD'), // YYYY-MM-DD
         },
     },
     { timestamps: true }

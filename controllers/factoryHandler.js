@@ -33,8 +33,8 @@ exports.getAll = (Model) =>
                 [collectionName]: documents,
             },
             {
-                documents: documents.length,
-                allDocuments: documentsCount,
+                count: documents.length,
+                allCount: documentsCount,
             }
         )
     })
@@ -157,7 +157,7 @@ exports.search = (Model) =>
                 [collectionName]: documents,
             },
             {
-                documents: documents.length,
+                count: documents.length,
             }
         )
     })

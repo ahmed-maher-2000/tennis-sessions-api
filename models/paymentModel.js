@@ -36,13 +36,6 @@ paymentSchema.pre('save', async function (next) {
 paymentSchema.pre(/^find/, function (next) {
     this.find()
         .populate({
-            path: 'createdBy',
-            select: {
-                name: 1,
-                photo: 1,
-            },
-        })
-        .populate({
             path: 'player',
             select: {
                 name: 1,

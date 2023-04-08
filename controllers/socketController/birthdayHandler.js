@@ -1,10 +1,9 @@
 const Models = require('../../models')
+const cron = require('node-cron')
 
 module.exports = (io) => {
-    const dayInMS = 24 * 60 * 60 * 1000
-    setInterval(async () => {
+    const birthdayTask = cron.schedule('* 9 * * *', async () => {
         const today = new Date(Date.now())
-
         let users = await Models.User.find()
             .select('+birthday +name +role')
             .lean()
@@ -42,5 +41,7 @@ module.exports = (io) => {
                 io.to(adminSocket.id).emit('birthday', events)
             })
         }
-    }, dayInMS)
+    })
+
+    birthdayTask.start()
 }
