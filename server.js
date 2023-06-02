@@ -3,10 +3,10 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const { cloudinaryConfig } = require('./utils/cloudinary')
 const server = require('http').createServer(app)
-const { Server } = require('socket.io')
-const io = new Server(server, {
-    cors: '*',
-})
+// const { Server } = require('socket.io')
+// const io = new Server(server, {
+//     cors: '*',
+// })
 
 dotenv.config()
 cloudinaryConfig()
@@ -30,11 +30,6 @@ mongoose
         useUnifiedTopology: true,
     })
     .then(() => console.log('Database connected Successfully...'))
-
-// socket io
-io.on('connection', (socket) => {
-    console.log('user connected: ', socket.id)
-})
 
 const PORT = process.env.PORT ?? 3000
 server.listen(PORT, () => console.log(`Server is listening on port: ${PORT}`))

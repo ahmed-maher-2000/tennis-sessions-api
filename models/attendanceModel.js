@@ -1,7 +1,7 @@
 const { Types, Schema, model } = require('mongoose')
 const moment = require('moment')
 
-const presenceSchema = new Schema(
+const attendanceSchema = new Schema(
     {
         user: {
             type: Types.ObjectId,
@@ -12,11 +12,24 @@ const presenceSchema = new Schema(
             type: String,
             default: moment(Date.now()).format('YYYY-MM-DD'), // YYYY-MM-DD
         },
+
+        status: {
+            type: String,
+            lower: true,
+            trim: true,
+            enum: ['presence' , 'absence'],
+            default: 'presence'
+        },
+
+        createdBy: {
+            type: Types.ObjectId,
+            ref: 'User'
+        }
     },
     { timestamps: true }
 )
 
-presenceSchema.index(
+attendanceSchema.index(
     {
         user: 1,
         day: 1,
@@ -26,7 +39,7 @@ presenceSchema.index(
     }
 )
 
-presenceSchema.pre(/^find/, function (next) {
+attendanceSchema.pre(/^find/, function (next) {
     this.find().populate({
         path: 'user',
         select: {
@@ -38,4 +51,4 @@ presenceSchema.pre(/^find/, function (next) {
     next()
 })
 
-module.exports = model('Presence', presenceSchema)
+module.exports = model('Attendance', attendanceSchema)

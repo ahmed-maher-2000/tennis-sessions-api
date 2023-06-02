@@ -7,11 +7,8 @@ const qrcodes = require('../controllers/qrcodeController')
 router.use(protect)
 
 router.get(
-    '/sessions/:id',
-    restrictTo('admin', 'manager'),
-    qrcodes.generateSession
+    '/getMyQrcode',
+    qrcodes.generateUser
 )
-
-router.get('/presence', restrictTo('admin'), qrcodes.generatePresence)
 
 module.exports = router
