@@ -9,24 +9,23 @@ exports.getAttendance = factoryHandler.getOne(Models.Attendance)
 
 exports.createAttendanceMiddleware = async (req, res, next) => {
     try {
-        const { _id: createdBy } = req.user
-        const { user } = req.body
+        const { _id: createdById } = req.user
+        const { userId } = req.body
 
-        const userData = await Models.User.findById(user)
-        if (!userData)
+        const user = await Models.User.findById(userId)
+        if (!user)
             return next(
                 new AppError(
-                    `No user with this id: ${user}`,
+                    `No user with this id: ${userId}`,
                     StatusCodes.NOT_FOUND
                 )
             )
         req.body = {
-            createdBy,
-            user,
+            createdBy: createdById,
+            user: userId,
         }
         next()
     } catch (error) {
-        console.log(error)
         return next(
             new AppError(
                 'Can not create this attendance.',

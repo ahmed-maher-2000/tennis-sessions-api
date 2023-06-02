@@ -7,7 +7,6 @@ const Application = require('./applicationRoutes')
 const Academy = require('./academyRoutes')
 const Payment = require('./paymentRoutes')
 const Attendance = require('./attendanceRoutes')
-const Package = require('./packageRoutes')
 const Score = require('./scoreRoutes')
 
 module.exports = {
@@ -19,7 +18,6 @@ module.exports = {
     Session,
     Qrcode,
     Payment,
-    Package,
     Attendance,
     Score,
 }
