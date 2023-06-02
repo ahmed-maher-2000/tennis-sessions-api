@@ -4,7 +4,9 @@ const mongoose = require('mongoose')
 const { cloudinaryConfig } = require('./utils/cloudinary')
 const server = require('http').createServer(app)
 const { Server } = require('socket.io')
-const socketController = require('./controllers/socketController')
+const io = new Server(server, {
+    cors: '*',
+})
 
 dotenv.config()
 cloudinaryConfig()
@@ -29,19 +31,16 @@ mongoose
     })
     .then(() => console.log('Database connected Successfully...'))
 
-const io = new Server(server, {
-    cors: '*',
+// socket io
+io.on('connection', (socket) => {
+    console.log('user connected: ', socket.id)
 })
-// auth middleware for socket io
-io.use(socketController.protect)
-
-// connection event in socket io
-io.on('connection', socketController.connectionHandler(io))
-
-socketController.birthdayHandler(io)
 
 const PORT = process.env.PORT ?? 3000
 server.listen(PORT, () => console.log(`Server is listening on port: ${PORT}`))
+
+// tasks
+require('./utils/tasks')
 
 process.on('unhandledRejection', (err) => {
     console.log('UNHANDLED REJECTION !!!!!!!!')

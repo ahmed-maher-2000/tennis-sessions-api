@@ -9,19 +9,9 @@ const paymentSchema = new Schema(
             ref: 'Package',
         },
 
-        packageNumber: {
-            type: Number,
-            default: 1,
-        },
-
         sessions: {
             type: Number,
-            default: 0,
-        },
-
-        price: {
-            type: Number,
-            default: 0,
+            default: 1,
         },
 
         player: {
@@ -39,26 +29,24 @@ const paymentSchema = new Schema(
 
 paymentSchema.pre('save', async function (next) {
     const package = await Package.findById(this.package)
-    this.price = package.price * this.packageNumber
-    this.sessions = package.sessions * this.packageNumber
-
+    this.sessions = package.sessions
     next()
 })
 
 paymentSchema.pre(/^find/, function (next) {
     this.find()
         .populate({
-            path: 'createdBy',
+            path: 'player',
             select: {
                 name: 1,
                 photo: 1,
             },
         })
         .populate({
-            path: 'player',
+            path: 'package',
             select: {
-                name: 1,
-                photo: 1,
+                sessions: 1,
+                price: 1,
             },
         })
 

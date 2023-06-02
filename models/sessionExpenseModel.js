@@ -1,7 +1,7 @@
 const { Types, Schema, model } = require('mongoose')
 const User = require('./userModel')
 
-const sessionEspenseSchema = new Schema(
+const sessionExpenseSchema = new Schema(
     {
         session: {
             type: Types.ObjectId,
@@ -26,4 +26,4 @@ paymentSchema.pre('save', async function (next) {
     next()
 })
 
-module.exports = model('SessionExpense', sessionEspenseSchema)
+module.exports = model('SessionExpense', sessionExpenseSchema)

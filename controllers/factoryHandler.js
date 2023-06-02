@@ -33,8 +33,8 @@ exports.getAll = (Model) =>
                 [collectionName]: documents,
             },
             {
-                documents: documents.length,
-                allDocuments: documentsCount,
+                count: documents.length,
+                allCount: documentsCount,
             }
         )
     })
@@ -71,6 +71,16 @@ exports.createOne = (Model, populateOptions) =>
 
         const collectionName = singular(Model.collection.collectionName)
         if (document.password) document.password = undefined
+
+        // const token =
+        //     ' fpbYuapRGvyymriG3Dv2Dt:APA91bF-NjnVtz5G48X50j1bmYmBH_amcOBKjzRNV1UeHfjXw1m_EoGyNbONgT-04JqgQDJdFlYVLGvOXVxSCbaKuNQTwbIwOksXWDYGX-8FgPanjlGb7it3RuDbdUJ-21Y4LKev_kUx'
+        // await notification(
+        //     {
+        //         title: 'payment',
+        //         body: JSON.stringify(document),
+        //     },
+        //     token
+        // )
         Sender.send(res, StatusCodes.CREATED, {
             [collectionName]: document,
         })
@@ -157,7 +167,7 @@ exports.search = (Model) =>
                 [collectionName]: documents,
             },
             {
-                documents: documents.length,
+                count: documents.length,
             }
         )
     })
