@@ -1,6 +1,6 @@
 const catchAsync = require('../../utils/catchAsync')
 const AppError = require('../../utils/appError')
-const statusCodes = require('http-status-codes')
+const {StatusCodes} = require('http-status-codes')
 const jwt = require('jsonwebtoken')
 const { promisify } = require('util')
 const Models = require('../../models')
@@ -18,7 +18,7 @@ module.exports = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'You are not logged in! Please log in to get access.',
-                statusCodes.UNAUTHORIZED
+                StatusCodes.UNAUTHORIZED
             )
         )
 
@@ -32,7 +32,7 @@ module.exports = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'The user belonging to this token does no longer exist.',
-                statusCodes.UNAUTHORIZED
+                StatusCodes.UNAUTHORIZED
             )
         )
 
@@ -40,10 +40,15 @@ module.exports = catchAsync(async (req, res, next) => {
         return next(
             new AppError(
                 'User recently changed the password! Please log in again.',
-                statusCodes.UNAUTHORIZED
+                StatusCodes.UNAUTHORIZED
             )
         )
 
-    req.user = currentUser
+    req.user = {
+        _id: currentUser._id,
+        name: currentUser.name,
+        role: currentUser.role,
+        email: currentUser.email
+    }
     next()
 })

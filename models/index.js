@@ -4,7 +4,7 @@ const Application = require('./applicationModel')
 const Academy = require('./academyModel')
 const Event = require('./eventModel')
 const Payment = require('./paymentModel')
-const Presence = require('./presenceModel')
+const Attendance = require('./attendanceModel')
 const Package = require('./packageModel')
 const Score = require('./scoreModel')
 
@@ -16,6 +16,6 @@ module.exports = {
     Event,
     Payment,
     Package,
-    Presence,
+    Attendance,
     Score,
 }
