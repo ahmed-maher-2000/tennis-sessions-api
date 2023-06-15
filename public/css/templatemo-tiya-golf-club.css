@@ -15,11 +15,12 @@ https://templatemo.com/tm-587-tiya-golf-club
   --primary-color:                #81B29A;
   --secondary-color:              #3D405B;
   --section-bg-color:             #F4F1DE;
-  --custom-btn-bg-color:          #F2CC8F;
+  --custom-btn-bg-color:          #689207;
+  --custom-firstbtn-bg-color:     #ffffff;
   --custom-btn-bg-hover-color:    #E07A5F;
   --dark-color:                   #000000;
   --p-color:                      #717275;
-  --link-hover-color:             #F2CC8F;
+  --link-hover-color:             #689207;
 
   --body-font-family:             'DM Sans', sans-serif;
 
@@ -378,8 +379,8 @@ strong {
 
 .custom-border-btn {
   background: transparent;
-  border: 2px solid var(--custom-btn-bg-color);
-  color: var(--custom-btn-bg-color);
+  border: 2px solid var(--custom-firstbtn-bg-color);
+  color: var(--custom-firstbtn-bg-color);
 }
 
 .custom-border-btn:hover {
@@ -487,8 +488,8 @@ strong {
 
 .navbar-expand-lg .navbar-nav .nav-link {
   border-radius: var(--border-radius-large);
-  margin: 10px;
-  padding: 10px;
+  margin: 25px;
+  padding: 1px;
 }
 
 .navbar-nav .nav-link {
@@ -696,6 +697,14 @@ strong {
 -----------------------------------------*/
 .section-bg-image {
   background-image: url('../images/frederik-rosar-NDSZcCfnsbY-unsplash.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin-bottom: -70px;
+}
+.section-bg-image2 {
+  background-image: url('../images/top-view-tennis-ball-racket-with-copy-space.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -1202,7 +1211,7 @@ strong {
     left: 10px;
     opacity: 1;
     pointer-events: auto;
-    max-width: 155px;
+    max-width: 200px;
     margin-top: 15px;
     margin-bottom: 15px;
   }
