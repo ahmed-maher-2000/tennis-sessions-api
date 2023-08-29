@@ -1,10 +1,10 @@
 const { StatusCodes } = require('http-status-codes')
 const Models = require('../models')
-const AppError = require('../utils/appError')
+const AppError = require('../errors/AppError')
 const catchAsync = require('../utils/catchAsync')
-const Sender = require('../utils/Sender')
+const Sender = require('../services/Sender')
 const factoryHandler = require('./factoryHandler')
-const Email = require('../utils/email')
+const Email = require('../services/Email')
 
 exports.getAllApplications = factoryHandler.getAll(Models.Application)
 

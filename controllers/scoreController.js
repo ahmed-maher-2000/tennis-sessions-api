@@ -1,6 +1,6 @@
 const Models = require('../models')
 const catchAsync = require('../utils/catchAsync')
-const Sender = require('../utils/Sender')
+const Sender = require('../services/Sender')
 const factoryHandler = require('./factoryHandler')
 const { StatusCodes } = require('http-status-codes')
 

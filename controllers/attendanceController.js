@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes')
 const Models = require('../models')
-const AppError = require('../utils/appError')
+const AppError = require('../errors/AppError')
 const factoryHandler = require('./factoryHandler')
 
 exports.getAllAttendances = factoryHandler.getAll(Models.Attendance)

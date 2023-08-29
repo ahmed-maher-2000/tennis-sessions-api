@@ -1,10 +1,10 @@
 const catchAsync = require('../../utils/catchAsync')
 const Models = require('../../models')
-const AppError = require('../../utils/appError')
+const AppError = require('../../errors/AppError')
 const Token = require('./Token')
 const { StatusCodes } = require('http-status-codes')
-const Sender = require('../../utils/Sender')
-const Email = require('../../utils/email')
+const Sender = require('../../services/Sender')
+const Email = require('../../services/Email')
 const crypto = require('crypto')
 
 // exports.signup = catchAsync(async (req, res, next) => {

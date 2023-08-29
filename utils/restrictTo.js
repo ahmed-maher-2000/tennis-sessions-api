@@ -1,4 +1,4 @@
-const ApiError = require('./appError')
+const ApiError = require('../errors/AppError')
 const statusCodes = require('http-status-codes')
 
 module.exports = (...roles) => {
