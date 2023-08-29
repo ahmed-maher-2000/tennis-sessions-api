@@ -1,5 +1,5 @@
 const Models = require('../models')
-const AppError = require('../utils/appError')
+const AppError = require('../errors/AppError')
 const { StatusCodes } = require('http-status-codes')
 const catchAsync = require('../utils/catchAsync')
 const Token = require('./authController/Token')

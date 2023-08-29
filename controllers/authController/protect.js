@@ -1,6 +1,6 @@
 const catchAsync = require('../../utils/catchAsync')
-const AppError = require('../../utils/appError')
-const {StatusCodes} = require('http-status-codes')
+const AppError = require('../../errors/AppError')
+const { StatusCodes } = require('http-status-codes')
 const jwt = require('jsonwebtoken')
 const { promisify } = require('util')
 const Models = require('../../models')
@@ -48,7 +48,7 @@ module.exports = catchAsync(async (req, res, next) => {
         _id: currentUser._id,
         name: currentUser.name,
         role: currentUser.role,
-        email: currentUser.email
+        email: currentUser.email,
     }
     next()
 })
