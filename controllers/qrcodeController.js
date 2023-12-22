@@ -1,8 +1,5 @@
-const Models = require('../models')
-const AppError = require('../errors/AppError')
 const { StatusCodes } = require('http-status-codes')
 const catchAsync = require('../utils/catchAsync')
-const Token = require('./authController/Token')
 const qrcodeGenerator = require('../utils/qrCodeGenerator')
 
 exports.generateUser = catchAsync(async (req, res, next) => {

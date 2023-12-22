@@ -1,10 +1,10 @@
-const catchAsync = require('../../utils/catchAsync')
-const Models = require('../../models')
-const AppError = require('../../errors/AppError')
-const Token = require('./Token')
+const catchAsync = require('../utils/catchAsync')
+const Models = require('../models')
+const AppError = require('../errors/AppError')
+const Token = require('../services/Token')
 const { StatusCodes } = require('http-status-codes')
-const Sender = require('../../services/Sender')
-const Email = require('../../services/Email')
+const Sender = require('../services/Sender')
+const Email = require('../services/Email')
 const crypto = require('crypto')
 
 // exports.signup = catchAsync(async (req, res, next) => {
