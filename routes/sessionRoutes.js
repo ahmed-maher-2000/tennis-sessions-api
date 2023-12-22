@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const sessions = require('../controllers/sessionController')
-const protect = require('../controllers/authController/protect')
+const protect = require('../middlewares/protect')
 const restrictTo = require('../utils/restrictTo')
 
 router.use(protect)

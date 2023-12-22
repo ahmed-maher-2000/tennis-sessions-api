@@ -1,9 +1,9 @@
-const catchAsync = require('../../utils/catchAsync')
-const AppError = require('../../errors/AppError')
+const catchAsync = require('../utils/catchAsync')
+const AppError = require('../errors/AppError')
 const { StatusCodes } = require('http-status-codes')
 const jwt = require('jsonwebtoken')
 const { promisify } = require('util')
-const Models = require('../../models')
+const Models = require('../models')
 
 module.exports = catchAsync(async (req, res, next) => {
     let token = req.cookies.jwt

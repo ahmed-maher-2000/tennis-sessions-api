@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const academys = require('../controllers/academyController')
-const protect = require('../controllers/authController/protect')
+const protect = require('../middlewares/protect')
 const restrictTo = require('../utils/restrictTo')
 
 router.get('/', academys.getAllAcademys)
